@@ -1,0 +1,14 @@
+You need to make sure you have the supporing libraries installed:
+Leaflet (v 1.9.4 as of this writing) in
+/leaflet/
+jQuery (v 3.7.0 as of this writing) in
+/jquery/
+jQuery-UI (v 1.13.2 as of this writing) in
+/jquery-ui/
+Bootstrap (v 5.3.0 as of this writing) in
+/bootstrap/
+
+Be sure to confirm / adjust the index.html accordingly for the includes at the top.
+
+
+
