@@ -9,6 +9,10 @@ I had some notes somewhere, I'll add them in here, or as a separate file.
 This project uses Leaflet for all visualization.   
 I intend for a portion of any revenue this generates to go to Leaflet.  
 
+# https://operations.osmfoundation.org/policies/tiles/
+# http://www.openstreetmap.org/copyright
+The default is to point to OSM tile servers - if you do not agree with their license or usage policy, please change your settings.
+
 # https://geojson.org/  
 This project uses the GeoJSON format for data storage.  
 
