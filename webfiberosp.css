@@ -1,7 +1,120 @@
 /* this is the primary styling for WebFiberOSP */
 /* You should put overrides in local.css */
 
+/* .class / #id */
+
+/*
+all of this layout stuff started with the examples at
+https://www.w3schools.com/css/css_website_layout.asp
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* we don't use the header, we put the logo in the topnav */
+.header {
+	background-color: #F1F1F1;
+	text-align: center;
+	padding: 20px;
+}
+
+/* The navbar container */
+.topnav {
+	overflow: hidden;
+	background-color: white;
+	height: 50px;
+	vertical-align: middle;
+}
+
+/* Navbar links */
+.topnav a {
+	float: left;
+	/* display: block; */
+	color: #f2f2f2;
+	text-align: center;
+	padding: 5px 5px;
+	text-decoration: none;
+}
+
+/* Links - change color on hover */
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+.topnav img {
+	float: left;
+}
+
+.button {
+	background: white;
+	text-align: center;
+	border-radius: 8px;
+	-moz-border-radius: 8px;
+	border: 1px solid #890000;
+	padding-left: 10px;
+	padding-right: 10px;
+	/* margin: 10px; */
+	cursor: pointer;
+}
+.button:hover {
+	background: #f2f2f2;
+}
+.button.function {
+	background: #d2d2d2;
+}
+.button.function:hover {
+	background: #b2b2b2;
+}
+
+.column {
+	float: left;
+	padding: 10px;
+	border: 2px;
+}
+
+/* Left and right column */
+.column.left {
+	width: 10%;
+}
+
+/* Middle column */
+.column.right {
+	width: 90%;
+	border: 4px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+/* you really shouldn't be using this app if this is you */
+@media screen and (max-width: 600px) {
+	.column.left, .column.right {
+		width: 100%;
+	}
+}
+
+/* this is unused */
+.footer {
+	background-color: #F1F1F1;
+	text-align: center;
+	padding: 10px;
+}
+
+/* end of w3schools stuff */
+
 #map {
 	height: 600px;
-	width: 900px;
+	width: 100%;
 }
+
