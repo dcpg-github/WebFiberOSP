@@ -7,29 +7,29 @@
 
 
 <!-- leaflet -->
-<link rel="stylesheet" href="/leaflet/leaflet.css" />
-<script src="/leaflet/leaflet.js"></script>
+<link rel="stylesheet" href="leaflet/leaflet.css" />
+<script src="leaflet/leaflet.js"></script>
 <!-- jquery -->
-<script src="/jquery/jquery.js"></script>
+<script src="jquery/jquery.js"></script>
 <!-- jqueryui -->
 <!--
-<link rel="stylesheet" href="/jquery-ui/jquery-ui-min.css">
-<script src="/jquery-ui/jquery-ui-min.js"></script>
+<link rel="stylesheet" href="jquery-ui/jquery-ui-min.css">
+<script src="jquery-ui/jquery-ui-min.js"></script>
 -->
 <!-- jquery-ui-layout -->
 <!--
-<link rel="stylesheet" href="/jquery-layout/layout-default.css">
-<script src="/jquery-layout/jquery.layout.min.js"></script>
+<link rel="stylesheet" href="jquery-layout/layout-default.css">
+<script src="jquery-layout/jquery.layout.min.js"></script>
 -->
 <!-- bootstrap -->
 <!--
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css" />
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" />
+<script src="bootstrap/js/bootstrap.min.js"></script>
 -->
 <!-- webFiberOSP -->
-<link rel="stylesheet" href="/webfiberosp.css" />
-<link rel="stylesheet" href="/local.css" />
-<script src="/webfiberosp.js"></script>
+<link rel="stylesheet" href="webfiberosp.css" />
+<link rel="stylesheet" href="local.css" />
+<script src="webfiberosp.js"></script>
 
 <title>webFiberOSP</title>
 
@@ -37,22 +37,22 @@
 
 <body>
 
-<div class="topnav">
-<img src="assets/WebFiberOSP-logo.png" /><br />
-<span class="button" id="Btn1">Btn1</span>
-<span class="button" id="Btn2">Button2</span>
+<div id="topnav" class="topnav">
+<img src="assets/WebFiberOSP-logo.png" />
+<!-- <span class="button horizontal" id="Btn1">Btn1</span> -->
 </div>
 
 <div class="row">
 
-<div class="column left">
-(function stuff)
-<span class="button function" id="FuncBtn1">Function1</span>
-<span class="button function" id="FuncBtn2">Function2</span>
+<div id="leftnav" class="column left">
+<span class="button vertical" id="btn_vault">Vault</span>
+<span class="button vertical" id="btn_panel">Panel</span>
+<span class="button vertical" id="btn_cable">Cable</span>
+<span class="button vertical" id="btn_splice">Splice</span>
 </div>
 
 <div class="column right">
-<div id="map"></div>
+<div id="mapdiv"></div>
 </div>
 
 </div><!-- the "row" div -->
