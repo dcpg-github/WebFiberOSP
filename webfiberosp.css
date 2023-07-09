@@ -27,7 +27,7 @@ body {
 .topnav {
 	overflow: hidden;
 	background-color: white;
-	height: 50px;
+	height: 30px;
 	vertical-align: middle;
 }
 
@@ -83,21 +83,27 @@ body {
 }
 
 .column {
+	background: white;
 	float: left;
-	border: 2px;
 }
 
 /* Left and right column */
 .column.left {
-	width: 10%;
-	padding-left: 10px;
-	padding-right: 10px;
+	width: 9%;
+/*
+	padding-left: 5px;
+	padding-right: 5px;
+*/
+	margin-left: 5px;
+	margin-right: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	border: 1px solid black;
 }
 
 /* Middle column */
 .column.right {
 	width: 90%;
-	border: 4px;
 }
 
 /* Clear floats after the columns */
