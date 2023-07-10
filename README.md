@@ -34,3 +34,7 @@ This project uses jQuery-UI-Layout for nicer layout control
 # https://getbootstrap.com/  
 This project uses Bootstrap to attempt to be not ugly.  
 
+(references)
+#  https://geojson.io/#map=8/33/-112
+This map kind of does what we want - it allows you to draw on the map object.  Note it's using mapbox though, not leaflet.
+
