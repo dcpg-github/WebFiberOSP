@@ -1,16 +1,29 @@
 // This is the primary javascript source for WebFiberOSP
-var map = ''
-var resize_timeout = 0
-var testline = ''
+var map = '';
+var draw_mode = '';
+var map_lat = '.';
+var map_lon = '.';
+var point_list = [];
+var test_line = '';
+var click_timeout = 0;
+var debounce_time = 400;
+
+// unused
+var resize_timeout = 0;
 
 // this is jquery shorthand
 $(function() {
 
-	// $('#btnclear').click(function(e) { clearfields(); });
-	$('#btn_vault').click(function(e) { InitTestLine(); });
-	$('#btn_panel').click(function(e) { RemoveTestLine(); });
+	// buttons
+	$('#btn_vault').click(function(e) { ClickVault(); });
+	$('#btn_panel').click(function(e) { ClickPanel(); });
+	$('#btn_cable').click(function(e) { ClickCable(); });
+	$('#btn_splice').click(function(e) { ClickSplice(); });
+
+	// other actions
 	$(window).resize(function() { ResizeWindow(); });
 
+	// initialize the page
 	PutMapOnPage();
 	// InitTestLine();
 });
@@ -23,8 +36,9 @@ function PutMapOnPage() {
     	maxZoom: 19,
     	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 	}).addTo(map);
-	map.on('click', function(e) { MapClick(e); });
-	map.on('doubleclick', function(e) { MapDoubleClick(e); });
+	// map.on('click', function() { MapClick(); });
+	map.on('click', function() { DebounceMapClick(); });
+	map.on('dblclick', function() { MapDoubleClick(); });
 	map.on('mousemove', function(e) { PointerMove(e); });
 }
 
@@ -54,16 +68,16 @@ pointList[pointList.length] = point;
 point = new L.LatLng(33.627377, -112.376692);
 pointList[pointList.length] = point;
 
-testline = new L.Polyline(pointList, {
+test_line = new L.Polyline(pointList, {
     color: 'red',
     weight: 3,
     opacity: 0.5,
     smoothFactor: 1
 });
-testline.addTo(map);
+test_line.addTo(map);
 
 /*
-testline = {
+test_line = {
   "type": "FeatureCollection",
   "features": [
     {
@@ -82,15 +96,13 @@ testline = {
   ]
 };
 
-L.geoJSON(testline).addTo(map);
+L.geoJSON(test_line).addTo(map);
 */
 
 }
 function RemoveTestLine() {
-	testline.remove();
+	test_line.remove();
 }
-
-
 
 // don't resize immediately, in case we're mid-resize
 // after some testing, we don't need to do this -
@@ -99,6 +111,59 @@ function StartResizeWindowDebounce() {
 	console.log("debouncing")
 	clearTimeout(resize_timeout)
 	resize_timeout = setTimeout(ResizeWindow, 1000)
+}
+
+// button click actions
+function ClickVault() {
+	if (draw_mode != "")
+		$("#btn_"+draw_mode).removeClass("active");
+	if (draw_mode == "vault") {
+		draw_mode = "";
+		map.doubleClickZoom.enable();
+	} else {
+		draw_mode = "vault";
+		$("#btn_"+draw_mode).addClass("active");
+		map.doubleClickZoom.disable();
+	}
+}
+
+function ClickPanel() {
+	if (draw_mode != "")
+		$("#btn_"+draw_mode).removeClass("active");
+	if (draw_mode == "panel") {
+		draw_mode = "";
+		map.doubleClickZoom.enable();
+	} else {
+		draw_mode = "panel";
+		$("#btn_"+draw_mode).addClass("active");
+		map.doubleClickZoom.disable();
+	}
+}
+
+function ClickCable() {
+	if (draw_mode != "")
+		$("#btn_"+draw_mode).removeClass("active");
+	if (draw_mode == "cable") {
+		draw_mode = "";
+		map.doubleClickZoom.enable();
+	} else {
+		draw_mode = "cable";
+		$("#btn_"+draw_mode).addClass("active");
+		map.doubleClickZoom.disable();
+	}
+}
+
+function ClickSplice() {
+	if (draw_mode != "")
+		$("#btn_"+draw_mode).removeClass("active");
+	if (draw_mode == "splice") {
+		draw_mode = "";
+		map.doubleClickZoom.enable();
+	} else {
+		draw_mode = "splice";
+		$("#btn_"+draw_mode).addClass("active");
+		map.doubleClickZoom.disable();
+	}
 }
 
 // resize the map div and force render
@@ -113,23 +178,44 @@ function ResizeWindow() {
 		// map.invalidateSize();
 }
 
-function MapClick(e) {
-	console.log("map click on lat ["+e.latlng.lat+"] lon ["+e.latlng.lng+"]");
+function DebounceMapClick(event) {
+	clearTimeout(click_timeout)
+	click_timeout = setTimeout(MapClick, debounce_time)
 }
 
-function MapDoubleClick(e) {
-	console.log("map doubleclick on lat ["+e.latlng.lat+"] lon ["+e.latlng.lng+"]");
+function MapClick() {
+	console.log("map click on lat ["+map_lat+"] lon ["+map_lon+"]");
+	if (draw_mode == "cable") {
+		point = new L.LatLng(map_lat, map_lon);
+		point_list[point_list.length] = point;
+	}
 }
 
-function PointerMove(e) {
+function MapDoubleClick() {
+	clearTimeout(click_timeout)
+	console.log("map doubleclick on lat ["+map_lat+"] lon ["+map_lon+"]");
+	if (draw_mode == "cable") {
+		point = new L.LatLng(map_lat, map_lon);
+		point_list[point_list.length] = point;
+		if (test_line != '') 
+			test_line.remove();
+		test_line = new L.Polyline(point_list, {
+    		color: 'red', weight: 3, opacity: 1, smoothFactor: 1
+		});
+		test_line.addTo(map);
+	}
+}
+
+function PointerMove(event) {
 	// seems like a lot of work, maybe set a flag
-	// console.log("pointer at lat ["+e.latlng.lat+"] lon ["+e.latlng.lng+"]");
-	tmplat = e.latlng.lat.toString().split('.');
-	lat = tmplat[0]+'.'+tmplat[1].substring(0,6);
-	tmplon = e.latlng.lng.toString().split('.');
-	lon = tmplon[0]+'.'+tmplon[1].substring(0,6);
-	$("#displat").html(lat);
-	$("#displon").html(lon);
+	map_lat = event.latlng.lat;
+	map_lon = event.latlng.lng;
+	tmplat = map_lat.toString().split('.');
+	displat = tmplat[0]+'.'+tmplat[1].substring(0,6);
+	tmplon = map_lon.toString().split('.');
+	displon = tmplon[0]+'.'+tmplon[1].substring(0,6);
+	$("#displat").html(displat);
+	$("#displon").html(displon);
 }
 
 function MoveMap() {
